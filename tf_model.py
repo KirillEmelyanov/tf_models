@@ -5,6 +5,7 @@ import numpy as np
 import tensorflow as tf
 import pandas as pd
 
+from .base_model import BaseModel
 
 class TFModel(object):
     """ Base class for all tensorflow models. """
