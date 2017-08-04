@@ -144,6 +144,18 @@ class TFModel(object):
             out_layer = self.activations[activation](out_layer)
         return out_layer
 
+    def identity(self, input_tensor, name):
+        """ Create an alias with given name for input_tensor.
+
+        Args:
+        - input_tensor: tf.Variable, input tensor;
+        - name: str, name of alias;
+
+        Return:
+        - alias of input tensor, tf.Variable;
+        """
+        return tf.identity(input_tensor, name=name)
+
     @wraps(tf.layers.flatten)
     def flatten(self, input_tensor, **kwargs):
         return tf.contrib.flatten(input_tensor, **kwargs)
