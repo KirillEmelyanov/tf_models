@@ -51,7 +51,7 @@ class TFModel(object):
 
     @staticmethod
     def batch_size(input_tensor):
-        """ Return batch size of input tensor represented by first dimension.
+        """ Return batch size of the input tensor represented by first dimension.
 
         Args:
         - input_tensor: tf.Variable, input_tensor.
