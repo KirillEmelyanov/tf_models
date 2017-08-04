@@ -90,3 +90,15 @@ class TFModel(object):
             out_layer = tf.nn.max_pool(input_tensor, ksize=(1, *kernel_size, 1),
                                        strides=(1, *strides, 1), padding=padding)
         return out_layer
+
+    @wraps(tf.layers.flatten)
+    def flatten(self, input_tensor, **kwargs):
+        return tf.contrib.flatten(input_tensor, **kwargs)
+
+    @wraps(tf.layers.batch_normalization)
+    def batch_norm(self, *args, **kwargs):
+        return tf.layers.batch_normalization(*args, **kwargs, training=self.phase)
+
+    @wraps(tf.layers.dropout)
+    def dropout(self, *args, **kwargs):
+        return tf.layers.dropout(*args, **kwargs, training=self.phase)
