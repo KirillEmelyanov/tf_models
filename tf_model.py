@@ -10,6 +10,12 @@ from .base_model import BaseModel
 class TFModel(BaseModel):
     """ Base class for all tensorflow models. """
 
+    activations = {'relu': tf.nn.relu,
+                   'sigmoid': tf.nn.sigmoid,
+                   'tanh': tf.nn.tanh,
+                   'softmax': tf.nn.softmax,
+                   'linear': tf.identity}
+
     def __new__(cls, name, *args, **kwargs):
         """ Add necessary attributes to object of tensorflow model. """
         instance = super(TFModel, cls).__new__(cls)
