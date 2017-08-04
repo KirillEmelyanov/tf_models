@@ -36,3 +36,27 @@ class TFModel(object):
         Returns string.
         """
         return self.__scope_name
+
+    @staticmethod
+    def num_channels(input_tensor):
+        """ Return channels dimension of the input tensor.
+
+        Args:
+        - input_tensor: tf.Variable, input tensor.
+
+        Return:
+        - number of channels, int;
+        """
+        return input_tensor.get_shape().as_list()[-1]
+
+    @staticmethod
+    def batch_size(input_tensor):
+        """ Return batch size of input tensor represented by first dimension.
+
+        Args:
+        - input_tensor: tf.Variable, input_tensor.
+
+        Return:
+        - number of items in the batch, int;
+        """
+        return input_tensor.get_shape().as_list()[0]
