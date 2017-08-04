@@ -74,12 +74,12 @@ class TFModel(object):
         return input_tensor.get_shape().as_list()
 
     def maxpool_2d(self, input_tensor, kernel_size, name, strides=(1, 1), padding='SAME'):
-        """ Return wraps input tensor with maxpooling 2d layer and returns result.
+        """ Wrap input tensor with maxpooling 2d layer and return result.
 
         Args:
         - input_tensor: tf.Variable, input tensor;
         - kernel_size: tuple(int, int) representing kernel size of pooling;
-        - name: name of this layer scope;
+        - name: name of this layer's scope;
         - strides: tuple(int, int) representing strides along x and y axes;
         - padding: padding mode for pooling operation;
 
@@ -89,6 +89,37 @@ class TFModel(object):
         with tf.variable_scope("MaxPool2D", name):
             out_layer = tf.nn.max_pool(input_tensor, ksize=(1, *kernel_size, 1),
                                        strides=(1, *strides, 1), padding=padding)
+        return out_layer
+
+    def conv2d(self, input_tensor, filters, kernel_size, name,
+               activation='linear', strides=(1, 1), padding='SAME'):
+        """ Wrap input tensor with 2D convolutional layer and return result.
+
+        Args:
+        - filters: int, number of filters in the output tensor;
+        - input_tensor: tf.Variable, input tensor;
+        - kernel_size: tuple(int, int) representing kernel size of convolution;
+        - name: name of this layer's scope;
+        - activation: str, activation to put after convolution;
+        - strides: tuple(int, int) representing strides along x and y axes;
+        - padding: padding mode for pooling operation;
+
+        Returns:
+        - output tensor, tf.Variable;
+        """
+        with tf.variable_scope("Conv2D", name):
+            init_w = tf.truncated_normal(shape=(*kernel_size,
+                                                self.num_channels(input_tensor),
+                                                filters),
+                                         dtype=tf.float32)
+
+            w = tf.Variable(init_w, name='W')
+            b = tf.Variable(tf.random_uniform(shape=(filters, ), dtype=tf.float32))
+
+            out_layer = tf.nn.conv2d(input_tensor, w, strides=(1, *strides, 1),
+                                     padding=padding,
+                                     name='conv_2d_op')
+            out_layer = self.activations[activation](out_layer)
         return out_layer
 
     @wraps(tf.layers.flatten)
