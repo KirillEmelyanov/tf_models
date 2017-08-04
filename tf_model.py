@@ -122,6 +122,28 @@ class TFModel(object):
             out_layer = self.activations[activation](out_layer)
         return out_layer
 
+    def dense(self, input_tensor, units, name, activation='linear'):
+        """ Wrap input tensor with dense layer.
+
+        Args:
+        - input_tensor: tf.Variable, input tensor;
+        - units: int, number of units in the output tensor;
+        - name: str, name of the dense layer's scope;
+        - activation: str, activation to put after convolution;
+
+        Return:
+        - output tensor, tf.Variable;
+        """
+        with tf.variable_scope('Dense', name):
+            init_w = tf.truncated_normal(shape=(self.num_channels(input_tensor),
+                                                units), dtype=tf.float32)
+            w = tf.Variable(init_w)
+            b = tf.Variable(tf.random_uniform(shape=(units, ), dtype=tf.float32))
+
+            out_layer = tf.matmul(input_tensor, w) + b
+            out_layer = self.activations[activation](out_layer)
+        return out_layer
+
     @wraps(tf.layers.flatten)
     def flatten(self, input_tensor, **kwargs):
         return tf.contrib.flatten(input_tensor, **kwargs)
