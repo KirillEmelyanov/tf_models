@@ -60,3 +60,15 @@ class TFModel(object):
         - number of items in the batch, int;
         """
         return input_tensor.get_shape().as_list()[0]
+
+    @staticmethod
+    def get_shape(input_tensor):
+        """ Return full shape of the input tensor represented by tuple of ints.
+
+        Args:
+        - input_tensor: tf.Variable, input_tensor.
+
+        Return:
+        - shape of input_tensor, tuple(int);
+        """
+        return input_tensor.get_shape().as_list()
