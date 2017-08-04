@@ -72,3 +72,21 @@ class TFModel(object):
         - shape of input_tensor, tuple(int);
         """
         return input_tensor.get_shape().as_list()
+
+    def maxpool_2d(self, input_tensor, kernel_size, name, strides=(1, 1), padding='SAME'):
+        """ Return wraps input tensor with maxpooling 2d layer and returns result.
+
+        Args:
+        - input_tensor: tf.Variable, input tensor;
+        - kernel_size: tuple(int, int) representing kernel size of pooling;
+        - name: name of this layer scope;
+        - strides: tuple(int, int) representing strides along x and y axes;
+        - padding: padding mode for pooling operation;
+
+        Returns:
+        - output tensor, tf.Variable;
+        """
+        with tf.variable_scope("MaxPool2D", name):
+            out_layer = tf.nn.max_pool(input_tensor, ksize=(1, *kernel_size, 1),
+                                       strides=(1, *strides, 1), padding=padding)
+        return out_layer
