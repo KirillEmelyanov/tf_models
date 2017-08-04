@@ -1,5 +1,8 @@
 class BaseModel(object):
+    """ Basic interface of model.
 
+    All models must implement save, load, fit and predict methods.
+    """
     def save(self, *args, **kwargs):
         """ Save model. """
         raise NotImplementedError
