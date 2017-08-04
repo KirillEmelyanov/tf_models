@@ -7,7 +7,7 @@ import pandas as pd
 
 from .base_model import BaseModel
 
-class TFModel(object):
+class TFModel(BaseModel):
     """ Base class for all tensorflow models. """
 
     def __new__(cls, name, *args, **kwargs):
